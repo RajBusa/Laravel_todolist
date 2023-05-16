@@ -14,6 +14,7 @@ const Add = (props) => {
       // console.log(response);
     })
     dispatch({ type: "ADD_TASK", payload: { title: task, start_time: null, end_time: null } })
+    setTask("");
   }
 
   return (
@@ -28,7 +29,7 @@ const Add = (props) => {
       </div> */}
 
       <div class="input-group my-3">
-        <input type="text" className="form-control border-0 shadow-sm" placeholder="Add task" name='task' id='task' onChange={onChange} />
+        <input type="text" className="form-control border-0 shadow-sm" placeholder="Add task" name='task' id='task' value={task} onChange={onChange} />
         <button className="input-group-text btn btn-primary p-3 px-4" type='button' onClick={addTask} disabled={task.length < 5}>Add</button>
       </div>
     </>
