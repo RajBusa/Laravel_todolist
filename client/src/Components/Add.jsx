@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useDispatch} from "react-redux";
-const Add = () => {
+const Add = (props) => {
   const dispatch = useDispatch();
   const [task, setTask] = useState("");
   const onChange = (e) => {
     setTask(e.target.value);
-    console.log(e.target.value)
+    // console.log(e.target.value)
   }
 
   const addTask = () => { 
     axios.post('http://127.0.0.1:8000/api/list', {'title': task}).then((response) => {
-      console.log(response);
+      // console.log(response);
     })
-    dispatch({ type: "ADD_TASK", payload: {'title': task, start_time: null, end_time: null} })
+    dispatch({ type: "ADD_TASK", payload: {title: task, start_time: null, end_time: null} })
   }
 
   return (

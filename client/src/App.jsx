@@ -9,25 +9,24 @@ function App() {
   const [task, setTask] = useState([]);
   const dispatch = useDispatch();
   const list = useSelector((state) => state)
-  // console.log(list.dataReducer,"list")
+  // setTask(list)
+  // console.log(list,"list")
   const getData = () => {
+    // console.log("getdara")
     axios.get('http://127.0.0.1:8000/api/list').then((response) => {
-      console.log(response.data);
-      setTask(response.data)
+      // console.log(response.data);
+      setTask([...response.data ?? []])
       dispatch({ type: "FETCH_DATA", payload: response.data });
     });
   }
   useEffect(() => {
     getData();
   }, []);
-  console.log(list, "list")
-  console.log(task, "task")
-
 
   return (
     <>
       <div className='container mt-4'>
-        <Add />
+        <Add/>
         <div>
           {list.dataReducer.map((taskItem) =>
             <div key={taskItem.id} >

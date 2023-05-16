@@ -1,16 +1,17 @@
 import { actions } from "./action";
 import { combineReducers } from "redux";
-// let initialState ={
-//     x: []
+// let initialState = {
+//     task: []
 // }
 const dataReducer = (state = [], action) => {
-    console.log(action.payload);
+    // console.log(action.payload);
     switch (action.type) {
         case actions.FETCH_DATA:
             return action.payload;
         case actions.ADD_TASK:
-            state.dataReducer.push({ ...actions.payload, id: state.length })
-            return action.payload;
+            state.unshift({ id: state.length + 1, ...action.payload })
+            console.log(state)
+            return [...state];
         case actions.START_TIME:
             let a = action.payload;
             a.start_time = new Date().getFullYear() + "-" + new Date().getMonth() + "-" + new Date().getDate() + " " + new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();

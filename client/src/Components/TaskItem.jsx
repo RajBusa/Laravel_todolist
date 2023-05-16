@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 const TaskItem = (props) => {
     const dispatch = useDispatch();
     const flag = useSelector( (state) => state)
-    console.log(flag)
+    // console.log(flag)
     const start = (task) => {
         // console.log(task.start_time,"i am from Button")
         dispatch({ type: "START_TIME", payload: task }); 
@@ -24,12 +24,12 @@ const TaskItem = (props) => {
         const date1 = new Date(task.start_time);
         const date2 = new Date(task.end_time);
         const result = datetimeDifference(date1, date2);
-        console.log(result)
+        // console.log(result)
         const readme = Object.keys(result)
             .filter(k => !!result[k])
             .map(k => `${result[k]} ${k}`)
             .join(", ");
-        console.log(readme)
+        // console.log(readme)
         return readme;
     }
 
@@ -48,13 +48,13 @@ const TaskItem = (props) => {
             {/* {
                 (props.task.start_time && !props.task.end_time) &&
                 <div className='d-grid gap-2 col-2'>
-                    <button type="button" class="btn btn-success" onClick={() => start(props.task)}>Start</button>
+                    <button type="button" class="btn btn-light" disabled>{}</button>
                 </div>
             } */}
             {
                 (!props.task.end_time) &&
                 <div className='d-grid gap-2 col-2'>
-                    <button type="button" class="btn btn-danger" onClick={() => end(props.task)} disabled = {((props.task.end_time === null && props.task.start_time === null) && flag.btnReducer === true)}>End</button>
+                    <button type="button" class="btn btn-danger" onClick={() => end(props.task)} disabled = {((props.task.end_time === null && props.task.start_time === null))  }>End</button>
                 </div>
             }
             {
