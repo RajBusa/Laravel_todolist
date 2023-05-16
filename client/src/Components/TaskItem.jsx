@@ -35,10 +35,16 @@ const TaskItem = (props) => {
 
 
     return (
-        <div className='row mt-2 '>
+        <div className='row my-3 mx-1 py-2 border-none rounded bg-white shadow-sm align-items-center'>
             <div className='col-8'>
                 <div>{props.task.title}</div>
             </div>
+            {
+                (!props.task.end_time) &&
+                <div className={props.task.start_time !== null?'d-grid gap-2 col-4': 'd-grid gap-2 col-2'} >
+                    <button type="button" class="btn btn-danger" onClick={() => end(props.task)} disabled = {((props.task.end_time === null && props.task.start_time === null))  }>End</button>
+                </div>
+            }
             {
                 (!props.task.start_time && !props.task.end_time) &&
                 <div className='d-grid gap-2 col-2'>
@@ -52,14 +58,8 @@ const TaskItem = (props) => {
                 </div>
             } */}
             {
-                (!props.task.end_time) &&
-                <div className='d-grid gap-2 col-2'>
-                    <button type="button" class="btn btn-danger" onClick={() => end(props.task)} disabled = {((props.task.end_time === null && props.task.start_time === null))  }>End</button>
-                </div>
-            }
-            {
                 (props.task.start_time && props.task.end_time) &&
-                <div className='d-grid gap-2 col-4'>
+                <div className='d-grid gap-2 col-4 justify-content-end'>
                     <button type="button" class="btn btn-light" disabled>{duration(props.task)}</button>
                 </div>
             }

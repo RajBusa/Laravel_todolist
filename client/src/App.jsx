@@ -9,13 +9,14 @@ function App() {
   const [task, setTask] = useState([]);
   const dispatch = useDispatch();
   const list = useSelector((state) => state)
+  // list = ;
+  // setTask(list.reverse())
   // setTask(list)
   // console.log(list,"list")
   const getData = () => {
     // console.log("getdara")
     axios.get('http://127.0.0.1:8000/api/list').then((response) => {
       // console.log(response.data);
-      setTask([...response.data ?? []])
       dispatch({ type: "FETCH_DATA", payload: response.data });
     });
   }
@@ -29,9 +30,7 @@ function App() {
         <Add/>
         <div>
           {list.dataReducer.map((taskItem) =>
-            <div key={taskItem.id} >
-              <TaskItem task={taskItem} />
-            </div>
+              <TaskItem task={taskItem} key={taskItem.id} />
           )}
         </div>
       </div>
