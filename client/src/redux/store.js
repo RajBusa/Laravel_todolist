@@ -1,10 +1,5 @@
-import { configureStore} from "@reduxjs/toolkit";
-import taskReducer from "./taskSlice";
-import { persistStore } from "redux-persist";
-export const store = configureStore({
-    reducer: {
-        user: taskReducer
-    }
-})
+import { createStore, applyMiddleware } from "redux";
+import { rootReducer } from "./reducer";
+import thunk from "redux-thunk";
 
-export const persistor = persistStore(store)
+export const store = createStore(rootReducer, applyMiddleware(thunk));
