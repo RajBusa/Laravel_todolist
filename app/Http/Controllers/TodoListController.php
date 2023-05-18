@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TodoList;
+use Exception;
 use Illuminate\Http\Request;
 
 class   TodoListController extends Controller
@@ -12,7 +13,9 @@ class   TodoListController extends Controller
      */
     public function index()
     {
-        return response()->json(TodoList::get());
+        $user_id = auth('api')->user()->id;
+        $todo_list = TodoList::where('user_id', $user_id)->get();
+        return response()->json($todo_list);
     }
 
     /**
@@ -31,7 +34,8 @@ class   TodoListController extends Controller
         TodoList::create([
             'title' => $request->title,
             'start_time' => $request->start_time,
-            'end_time' => $request->end_time
+            'end_time' => $request->end_time,
+            'user_id' => auth('api')->user()->id
         ]);
         return response()->json('successfully created');
     }
@@ -57,21 +61,37 @@ class   TodoListController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $todolist = TodoList::whereId($id);
-
-        $todolist->update([
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'title' => $request->title
-        ]);
-        return response()->json('successfully updated');
+        $todolist = TodoList::findOrFail($id);
+        if($todolist->user_id == auth('api')->user()->id){
+            $todolist->update([
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'title' => $request->title  
+            ]);
+            return response()->json('successfully updated');
+        }
+        return response()->json('some error exists');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(int $id)
+    {       
+        // dd($id);
+        $todolist = TodoList::find($id);
+        // return response()->json($todolist);
+        // dd($todolist);
+        if($todolist){
+            if($todolist->user_id == auth('api')->user()->id){
+                $todo = TodoList::where('id',$id)->delete();
+                return response()->json('successfully deleted');
+            } else {
+                return response()->json('some error exists');
+            }
+        }
+        else{
+            return response()->json('List not found');
+        }
     }
 }

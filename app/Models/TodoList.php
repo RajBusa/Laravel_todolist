@@ -9,5 +9,5 @@ class TodoList extends Model
 {
     use HasFactory;
     protected $table="todolist";
-    protected $fillable = ['title','start_time','end_time'];
+    protected $fillable = ['title','start_time','end_time','user_id'];
 }

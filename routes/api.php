@@ -3,6 +3,7 @@
 use App\Http\Controllers\TodoListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,13 @@ Route::get('/posts', function (){
     ]);
 });
 
-Route::resource('/list', TodoListController::class);
+
+
+
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
+Route::middleware('auth:api')->group(function(){
+    Route::get('/user/{id}', [UserController::class, 'getuser']);
+    Route::get('/logout', [UserController::class, 'logout']);
+    Route::resource('/list', TodoListController::class);
+});
